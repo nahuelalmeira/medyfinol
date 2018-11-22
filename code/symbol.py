@@ -30,17 +30,18 @@ def symbolCount(data, D):
     """
 
     N = len(data)
+    perm_dict = {}
     Permutations = list(permutations(range(D)))
+    for i, perm in enumerate(Permutations):
+        perm_dict[perm] = i
     n_words = len(Permutations)  # number of different words (n_words = D!)
+
     Z = [0] * n_words
-
     for i in range(N - (D - 1)):
-        Ranked_Window_Index = np.array(np.argsort(data[i:i + D]))
+        perm = np.argsort(data[i:i + D])
+        perm = tuple(int(elem) for elem in perm)
+        Z[perm_dict[perm]] += 1
 
-        for j, perm in enumerate(Permutations):
-            if not (perm - Ranked_Window_Index).any():
-                Z[j] = Z[j] + 1
-                break
     return Z
 
 

@@ -13,6 +13,11 @@ file_names = []
 for file_name in os.listdir(input_dir):
     if '.txt' in file_name:
         version = file_name.split('v')[1].split('.')[0]
+        
+        output_file = output_dir + '/' + 'properties_v' + version + '.txt'
+        if os.path.isfile(output_file):
+            continue
+
         print('Analyzing series', version)
         data = np.loadtxt(input_dir + '/' + file_name, 
                           dtype='float32', delimiter=',')
@@ -26,5 +31,5 @@ for file_name in os.listdir(input_dir):
 
             properties.append([H, D, C])
 
-        output_file = output_dir + '/' + 'properties_v' + version + '.txt'
+        
         np.savetxt(output_file, properties)
